@@ -31,7 +31,7 @@ then
     ln -sf /root/welcome.ipynb /workspace
 
     cd /
-    source ${MAIN_VEV}/bin/activate
+    source ${VENV}/bin/activate
     nohup jupyter lab --allow-root \
         --no-browser \
         --port=8888 \
@@ -55,7 +55,7 @@ then
 else
     mkdir -p /workspace/logs
     echo "Starting audiocraft"
-    source ${MAIN_VEV}/bin/activate
+    source ${VENV}/bin/activate
     cd /workspace/audiocraft && nohup python3 app.py > /workspace/logs/audiocraft.log &
     echo "audiocraft started"
     echo "Log file: /workspace/logs/audiocraft.log"
