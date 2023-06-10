@@ -1,4 +1,4 @@
-# Docker image for Audiocraft
+# Docker image for Audiocraft audio processing and generation with deep learning
 
 ## Installs
 
