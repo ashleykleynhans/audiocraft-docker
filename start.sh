@@ -51,12 +51,12 @@ then
     echo ""
     echo "   cd /workspace/audiocraft"
     echo "   deactivate && source /workspace/venv/activate"
-    echo "   ./python3 app.py"
+    echo "   ./python3 app.py --listen 0.0.0.0 --server_port 3000"
 else
     mkdir -p /workspace/logs
     echo "Starting audiocraft"
     source ${VENV}/bin/activate
-    cd /workspace/audiocraft && nohup python3 app.py > /workspace/logs/audiocraft.log &
+    cd /workspace/audiocraft && nohup python3 app.py --listen 0.0.0.0 --server_port 3000 > /workspace/logs/audiocraft.log &
     echo "audiocraft started"
     echo "Log file: /workspace/logs/audiocraft.log"
     deactivate

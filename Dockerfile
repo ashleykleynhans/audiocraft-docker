@@ -1,6 +1,6 @@
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as runtime
 
-ARG AUDIOCRAFT_COMMIT=984b3755a1b37c85dcff24fb516b946ea75da4aa
+ARG AUDIOCRAFT_COMMIT=5fff830b1334334c41a8243d19025bc8b52fd487
 ARG VENV=/workspace/venv
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -88,9 +88,6 @@ RUN wget https://github.com/runpod/runpodctl/releases/download/v1.10.0/runpodctl
 WORKDIR /workspace
 RUN mv /workspace/venv /venv
 RUN mv /workspace/audiocraft /audiocraft
-
-# Copy audiocraft app.py
-COPY app.py /audiocraft/
 
 # Set up the container startup script
 COPY start.sh /start.sh
