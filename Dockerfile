@@ -76,7 +76,7 @@ RUN source ${VENV}/bin/activate && \
 
 # Install the dependencies for Audiocraft
 WORKDIR /workspace/audiocraft
-RUN source ${VENV}/bin/activate && \
+RUN source /venv/bin/activate && \
     pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && \
     pip3 install --no-cache-dir xformers && \
     pip3 install -r requirements.txt && \
