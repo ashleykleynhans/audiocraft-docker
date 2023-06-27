@@ -9,5 +9,8 @@ fi
 OLD_PATH=${1}
 NEW_PATH=${2}
 
-cd ${NEW_PATH}/bin
-sed -i "s|${OLD_PATH}|${NEW_PATH}|g" *
+if [ ! -f ${NEW_PATH}/fixed ]; then
+  cd ${NEW_PATH}/bin
+  sed -i "s|${OLD_PATH}|${NEW_PATH}|g" *
+  touch ${NEW_PATH}/fixed
+fi
