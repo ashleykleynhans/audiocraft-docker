@@ -64,7 +64,7 @@ RUN git clone https://github.com/facebookresearch/audiocraft.git && \
     git reset ${AUDIOCRAFT_COMMIT} --hard
 
 # Install Jupyter
-RUN source ${VENV}/bin/activate && \
+RUN source /venv/bin/activate && \
     pip3 install jupyterlab \
       ipywidgets \
       jupyter-archive \
