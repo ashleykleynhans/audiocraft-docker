@@ -6,12 +6,10 @@ echo "Container is running"
 # Sync venv to workspace to support Network volumes
 echo "Syncing venv to workspace, please wait..."
 rsync -au --remove-source-files /venv/ /workspace/venv/
-rm -rf /venv
 
 # Sync audiocraft to workspace to support Network volumes
 echo "Syncing audiocraft to workspace, please wait..."
 rsync -au --remove-source-files /audiocraft/ /workspace/audiocraft/
-rm -rf /audiocraft
 
 # Fix the venv to make it work from /workspace
 echo "Fixing venv..."
