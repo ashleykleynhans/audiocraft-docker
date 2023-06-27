@@ -35,6 +35,7 @@ RUN apt update && \
         psmisc \
         rsync \
         vim \
+        zip \
         unzip \
         htop \
         pkg-config \
