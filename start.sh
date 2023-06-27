@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-export VENV=/workspace/venv
 export PYTHONUNBUFFERED=1
 
 echo "Container is running"
@@ -13,6 +12,10 @@ rm -rf /venv
 echo "Syncing audiocraft to workspace, please wait..."
 rsync -au --remove-source-files /audiocraft/ /workspace/audiocraft/
 rm -rf /audiocraft
+
+# Fix the venv to make it work from /workspace
+echo "Fixing venv..."
+/fix_venv.sh /venv /workspace/venv
 
 if [[ ${PUBLIC_KEY} ]]
 then
@@ -31,7 +34,7 @@ then
     ln -sf /root/welcome.ipynb /workspace
 
     cd /
-    source ${VENV}/bin/activate
+    source /workspace/venv/bin/activate
     nohup jupyter lab --allow-root \
         --no-browser \
         --port=8888 \
@@ -50,13 +53,13 @@ then
     echo "You can launch it manually:"
     echo ""
     echo "   cd /workspace/audiocraft"
-    echo "   deactivate && source /workspace/venv/activate"
+    echo "   deactivate && source /workspace/venv/bin/activate"
     echo "   ./python3 app.py --listen 0.0.0.0 --server_port 3000"
 else
     mkdir -p /workspace/logs
     echo "Starting audiocraft"
-    source ${VENV}/bin/activate
-    cd /workspace/audiocraft && nohup python3 app.py --listen 0.0.0.0 --server_port 3000 > /workspace/logs/audiocraft.log &
+    source /workspace/venv/bin/activate
+    cd /workspace/audiocraft && nohup python3 app.py --listen 0.0.0.0 --server_port 3000 > /workspace/logs/audiocraft.log 2>&1 &
     echo "audiocraft started"
     echo "Log file: /workspace/logs/audiocraft.log"
     deactivate

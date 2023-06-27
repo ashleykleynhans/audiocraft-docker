@@ -1,14 +1,16 @@
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as runtime
+# Stage 1: Base
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
-ARG AUDIOCRAFT_COMMIT=5fff830b1334334c41a8243d19025bc8b52fd487
-ARG VENV=/workspace/venv
+ARG AUDIOCRAFT_COMMIT=7e2f6d601cf38cd6b5a2bcd4126b48b810fbe6d9
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-ENV DEBIAN_FRONTEND noninteractive\
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=on \
     SHELL=/bin/bash
 
 # Create workspace working directory
-WORKDIR /workspace
+WORKDIR /
 
 # Install Ubuntu packages
 RUN apt update && \
@@ -49,14 +51,11 @@ RUN ln -s /usr/bin/python3.10 /usr/bin/python && \
     curl https://bootstrap.pypa.io/get-pip.py | python && \
     rm -f get-pip.py
 
-# Create and use the Python venv
-RUN python3 -m venv ${VENV}
+# Stage 2: Install Web UI and python modules
+FROM base as setup
 
-# Install Torch
-RUN source ${VENV}/bin/activate && \
-    pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && \
-    pip3 install --no-cache-dir xformers && \
-    deactivate
+# Create and use the Python venv
+RUN python3 -m venv /venv
 
 # Clone the git repo of Audiocraft and set version
 WORKDIR /workspace
@@ -64,17 +63,22 @@ RUN git clone https://github.com/facebookresearch/audiocraft.git && \
     cd /workspace/audiocraft && \
     git reset ${AUDIOCRAFT_COMMIT} --hard
 
-# Complete Jupyter installation
+# Install Jupyter
 RUN source ${VENV}/bin/activate && \
-    pip3 install jupyterlab ipywidgets jupyter-archive jupyter_contrib_nbextensions && \
+    pip3 install jupyterlab \
+      ipywidgets \
+      jupyter-archive \
+      jupyter_contrib_nbextensions \
+      gdown && \
     jupyter contrib nbextension install --user && \
     jupyter nbextension enable --py widgetsnbextension && \
-    pip3 install gdown && \
     deactivate
 
 # Install the dependencies for Audiocraft
 WORKDIR /workspace/audiocraft
 RUN source ${VENV}/bin/activate && \
+    pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && \
+    pip3 install --no-cache-dir xformers && \
     pip3 install -r requirements.txt && \
     pip3 install -e . && \
     deactivate
@@ -84,14 +88,11 @@ RUN wget https://github.com/runpod/runpodctl/releases/download/v1.10.0/runpodctl
     chmod a+x runpodctl && \
     mv runpodctl /usr/local/bin
 
-# Move audiocraft and venv to the root so it doesn't conflict with Network Volumes
-WORKDIR /workspace
-RUN mv /workspace/venv /venv
-RUN mv /workspace/audiocraft /audiocraft
-
 # Set up the container startup script
 COPY start.sh /start.sh
 RUN chmod a+x /start.sh
+COPY fix_venv.sh /fix_venv.sh
+RUN chmod +x /fix_venv.sh
 
 # Start the container
 SHELL ["/bin/bash", "--login", "-c"]
