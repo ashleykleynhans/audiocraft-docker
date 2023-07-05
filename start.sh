@@ -19,7 +19,7 @@ if [[ ${PUBLIC_KEY} ]]
 then
     echo "Installing SSH public key"
     mkdir -p ~/.ssh
-    echo ${PUBLIC_KEY} >> ~/.ssh/authorized_keys
+    echo -e "${PUBLIC_KEY}\n" >> ~/.ssh/authorized_keys
     chmod 700 -R ~/.ssh
     service ssh start
     echo "SSH Service Started"
