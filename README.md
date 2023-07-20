@@ -12,14 +12,14 @@
 
 ## Available on RunPod
 
-This image is designed to work on [RunPod](https://runpod.io?ref=w18gds2n).
+This image is designed to work on [RunPod](https://runpod.io?ref=2xxro4sy).
 You can use my custom [RunPod template](
 https://runpod.io/gsc?template=ks0mgazj0m&ref=w18gds2n)
 to launch it on RunPod.
 
 ## Acknowledgements
 
-1. [RunPod](https://runpod.io?ref=w18gds2n) for providing most
+1. [RunPod](https://runpod.io?ref=2xxro4sy) for providing most
    of the [container](https://github.com/runpod/containers) code.
 2. Dr. Furkan Gözükara for his amazing
    [YouTube videos](https://www.youtube.com/@SECourses/videos]).
