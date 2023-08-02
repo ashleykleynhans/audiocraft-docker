@@ -26,6 +26,7 @@ then
 else
     mkdir -p /workspace/logs
     echo "Starting audiocraft"
+    export HF_HOME="/workspace"
     source /workspace/venv/bin/activate
     cd /workspace/audiocraft && nohup python3 demos/musicgen_app.py --listen 0.0.0.0 --server_port 3001 > /workspace/logs/audiocraft.log 2>&1 &
     echo "audiocraft started"
