@@ -61,7 +61,7 @@ RUN python3 -m venv /venv
 # Clone the git repo of Audiocraft and set version
 WORKDIR /
 RUN git clone https://github.com/facebookresearch/audiocraft.git && \
-    cd /workspace/audiocraft && \
+    cd /audiocraft && \
     git reset ${AUDIOCRAFT_COMMIT} --hard
 
 # Install the dependencies for Audiocraft
