@@ -59,13 +59,13 @@ FROM base as setup
 RUN python3 -m venv /venv
 
 # Clone the git repo of Audiocraft and set version
-WORKDIR /workspace
+WORKDIR /
 RUN git clone https://github.com/facebookresearch/audiocraft.git && \
     cd /workspace/audiocraft && \
     git reset ${AUDIOCRAFT_COMMIT} --hard
 
 # Install the dependencies for Audiocraft
-WORKDIR /workspace/audiocraft
+WORKDIR /audiocraft
 RUN source /venv/bin/activate && \
     pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && \
     pip3 install --no-cache-dir xformers && \
