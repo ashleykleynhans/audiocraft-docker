@@ -1,7 +1,7 @@
 # Stage 1: Base
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
-ARG AUDIOCRAFT_COMMIT=7e2f6d601cf38cd6b5a2bcd4126b48b810fbe6d9
+ARG AUDIOCRAFT_COMMIT=c5157b5bf14bf83449c17ea1eeb66c19fb4bc7f0
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -18,7 +18,9 @@ RUN apt update && \
     apt install -y --no-install-recommends \
         software-properties-common \
         python3.10-venv \
+        python3-pip \
         python3-tk \
+        nginx \
         bash \
         git \
         ncdu \
@@ -47,10 +49,8 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
-# Set Python and pip
-RUN ln -s /usr/bin/python3.10 /usr/bin/python && \
-    curl https://bootstrap.pypa.io/get-pip.py | python && \
-    rm -f get-pip.py
+# Set Python
+RUN ln -s /usr/bin/python3.10 /usr/bin/python
 
 # Stage 2: Install Web UI and python modules
 FROM base as setup
@@ -64,17 +64,6 @@ RUN git clone https://github.com/facebookresearch/audiocraft.git && \
     cd /workspace/audiocraft && \
     git reset ${AUDIOCRAFT_COMMIT} --hard
 
-# Install Jupyter
-RUN source /venv/bin/activate && \
-    pip3 install jupyterlab \
-      ipywidgets \
-      jupyter-archive \
-      jupyter_contrib_nbextensions \
-      gdown && \
-    jupyter contrib nbextension install --user && \
-    jupyter nbextension enable --py widgetsnbextension && \
-    deactivate
-
 # Install the dependencies for Audiocraft
 WORKDIR /workspace/audiocraft
 RUN source /venv/bin/activate && \
@@ -84,16 +73,28 @@ RUN source /venv/bin/activate && \
     pip3 install -e . && \
     deactivate
 
+# Install Jupyter
+RUN pip3 install -U --no-cache-dir jupyterlab \
+        jupyterlab_widgets \
+        ipykernel \
+        ipywidgets \
+        gdown
+
 # Install runpodctl
 RUN wget https://github.com/runpod/runpodctl/releases/download/v1.10.0/runpodctl-linux-amd -O runpodctl && \
     chmod a+x runpodctl && \
     mv runpodctl /usr/local/bin
 
+# NGINX Proxy
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY 502.html /usr/share/nginx/html/502.html
+
 # Set up the container startup script
-COPY start.sh /start.sh
-RUN chmod a+x /start.sh
-COPY fix_venv.sh /fix_venv.sh
-RUN chmod +x /fix_venv.sh
+WORKDIR /
+COPY pre_start.sh start.sh fix_venv.sh ./
+RUN chmod +x /start.sh && \
+    chmod +x /pre_start.sh && \
+    chmod +x /fix_venv.sh
 
 # Start the container
 SHELL ["/bin/bash", "--login", "-c"]
