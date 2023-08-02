@@ -4,7 +4,7 @@
 
 * Ubuntu 22.04 LTS
 * CUDA 11.8
-* Python 3.10.6
+* Python 3.10.12
 * [Audiocraft](
   https://github.com/facebookresearch/audiocraft)
 * Torch 2.0.1
