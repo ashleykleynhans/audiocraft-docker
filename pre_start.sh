@@ -9,7 +9,7 @@ rsync -au /venv/ /workspace/venv/
 
 # Sync Audiocraft Plus to workspace to support Network volumes
 echo "Syncing Audiocraft Plus to workspace, please wait..."
-rsync -au /audiocraft/ /workspace/audiocraft/
+rsync -au /audiocraft_plus/ /workspace/audiocraft_plus/
 
 # Fix the venv to make it work from /workspace
 echo "Fixing venv..."
