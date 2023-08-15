@@ -5,8 +5,8 @@
 * Ubuntu 22.04 LTS
 * CUDA 11.8
 * Python 3.10.12
-* [Audiocraft](
-  https://github.com/facebookresearch/audiocraft)
+* [Audiocraft Plus](
+  https://github.com/GrandaddyShmax/audiocraft_plus) 2.0.0a
 * Torch 2.0.1
 * xformers 0.0.20
 

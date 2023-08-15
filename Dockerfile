@@ -1,7 +1,7 @@
 # Stage 1: Base
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
-ARG AUDIOCRAFT_COMMIT=c5157b5bf14bf83449c17ea1eeb66c19fb4bc7f0
+ARG AUDIOCRAFT_VERSION=2.0.0a
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -58,14 +58,14 @@ FROM base as setup
 # Create and use the Python venv
 RUN python3 -m venv /venv
 
-# Clone the git repo of Audiocraft and set version
+# Clone the git repo of Audiocraft Plus and set version
 WORKDIR /
-RUN git clone https://github.com/facebookresearch/audiocraft.git && \
-    cd /audiocraft && \
-    git reset ${AUDIOCRAFT_COMMIT} --hard
+RUN git clone https://github.com/GrandaddyShmax/audiocraft_plus.git && \
+    cd /audiocraft_plus && \
+    git checkout tags/${AUDIOCRAFT_VERSION}
 
-# Install the dependencies for Audiocraft
-WORKDIR /audiocraft
+# Install the dependencies for Audiocraft Plus
+WORKDIR /audiocraft_plus
 RUN source /venv/bin/activate && \
     pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && \
     pip3 install --no-cache-dir xformers && \
@@ -86,8 +86,8 @@ RUN wget https://github.com/runpod/runpodctl/releases/download/v1.10.0/runpodctl
     mv runpodctl /usr/local/bin
 
 # NGINX Proxy
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY 502.html /usr/share/nginx/html/502.html
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/502.html /usr/share/nginx/html/502.html
 
 # Set up the container startup script
 WORKDIR /
