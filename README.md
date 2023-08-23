@@ -1,4 +1,12 @@
-# Docker image for Audiocraft audio processing and generation with deep learning
+# Docker image for Audiocraft Plus
+
+## About
+
+About
+Audiocraft is a library for audio processing and generation with deep learning.
+It features the state-of-the-art EnCodec audio compressor / tokenizer, along with
+MusicGen, a simple and controllable music generation LM with textual and melodic
+conditioning.
 
 ## Installs
 
@@ -6,7 +14,7 @@
 * CUDA 11.8
 * Python 3.10.12
 * [Audiocraft Plus](
-  https://github.com/GrandaddyShmax/audiocraft_plus) 2.0.0a
+  https://github.com/GrandaddyShmax/audiocraft_plus) 2.0.1
 * Torch 2.0.1
 * xformers 0.0.20
 
@@ -16,6 +24,25 @@ This image is designed to work on [RunPod](https://runpod.io?ref=2xxro4sy).
 You can use my custom [RunPod template](
 https://runpod.io/gsc?template=ks0mgazj0m&ref=2xxro4sy)
 to launch it on RunPod.
+
+## Running Locally
+
+### Install Nvidia CUDA Driver
+
+- [Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
+- [Windows](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html)
+
+### Start the Docker container
+
+```bash
+docker run -d \
+  --gpus all \
+  -v /workspace \
+  -p 3000:3001 \
+  -p 8888:8888 \
+  -e JUPYTER_PASSWORD=Jup1t3R! \
+  ashleykza/audiocraft:3.0.2
+```
 
 ## Community and Contributing
 

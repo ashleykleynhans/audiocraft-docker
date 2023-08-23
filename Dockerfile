@@ -1,7 +1,7 @@
 # Stage 1: Base
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
-ARG AUDIOCRAFT_VERSION=2.0.0a
+ARG AUDIOCRAFT_VERSION=2.0.1
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -56,7 +56,7 @@ RUN ln -s /usr/bin/python3.10 /usr/bin/python
 FROM base as setup
 
 # Create and use the Python venv
-RUN python3 -m venv /venv
+RUN python3 -m venv --system-site-packages /venv
 
 # Clone the git repo of Audiocraft Plus and set version
 WORKDIR /
