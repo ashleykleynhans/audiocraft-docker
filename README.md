@@ -44,6 +44,8 @@ docker run -d \
   ashleykza/audiocraft:3.0.2
 ```
 
+You can obviously substitute the image name and tag with your own.
+
 ## Community and Contributing
 
 Pull requests and issues on [GitHub](https://github.com/ashleykleynhans/audiocraft-docker)
