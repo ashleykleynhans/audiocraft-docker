@@ -51,8 +51,8 @@ You can obviously substitute the image name and tag with your own.
 Pull requests and issues on [GitHub](https://github.com/ashleykleynhans/audiocraft-docker)
 are welcome. Bug fixes and new features are encouraged.
 
-You can contact me and get help with deploying your Serverless
-worker to RunPod on the RunPod Discord Server below,
+You can contact me and get help with deploying your container
+to RunPod on the RunPod Discord Server below,
 my username is **ashleyk**.
 
 <a target="_blank" href="https://discord.gg/pJ3P2DbUUq">![Discord Banner 2](https://discordapp.com/api/guilds/912829806415085598/widget.png?style=banner2)</a>
