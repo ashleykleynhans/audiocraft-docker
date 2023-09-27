@@ -68,7 +68,7 @@ RUN git clone https://github.com/GrandaddyShmax/audiocraft_plus.git && \
 WORKDIR /audiocraft_plus
 RUN source /venv/bin/activate && \
     pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && \
-    pip3 install --no-cache-dir xformers && \
+    pip3 install --no-cache-dir xformers protobuf && \
     pip3 install -r requirements.txt && \
     pip3 install -e . && \
     deactivate

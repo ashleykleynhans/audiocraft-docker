@@ -16,7 +16,7 @@ conditioning.
 * [Audiocraft Plus](
   https://github.com/GrandaddyShmax/audiocraft_plus) 2.0.1
 * Torch 2.0.1
-* xformers 0.0.20
+* xformers 0.0.21
 
 ## Available on RunPod
 
@@ -41,7 +41,7 @@ docker run -d \
   -p 3000:3001 \
   -p 8888:8888 \
   -e JUPYTER_PASSWORD=Jup1t3R! \
-  ashleykza/audiocraft:3.0.2
+  ashleykza/audiocraft:3.0.3
 ```
 
 You can obviously substitute the image name and tag with your own.
