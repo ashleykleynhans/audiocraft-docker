@@ -16,7 +16,10 @@ conditioning.
 * [Audiocraft Plus](
   https://github.com/GrandaddyShmax/audiocraft_plus) 2.0.1
 * Torch 2.0.1
-* xformers 0.0.21
+* xformers 0.0.22
+* [runpodctl](https://github.com/runpod/runpodctl)
+* [croc](https://github.com/schollz/croc)
+* [rclone](https://rclone.org/)
 
 ## Available on RunPod
 
@@ -41,10 +44,39 @@ docker run -d \
   -p 3000:3001 \
   -p 8888:8888 \
   -e JUPYTER_PASSWORD=Jup1t3R! \
-  ashleykza/audiocraft:3.0.3
+  ashleykza/audiocraft:latest
 ```
 
 You can obviously substitute the image name and tag with your own.
+
+### Ports
+
+| Connect Port | Internal Port | Description     |
+|--------------|---------------|-----------------|
+| 3000         | 3001          | Audiocraft Plus |
+| 8888         | 8888          | Jupyter Lab     |
+
+### Environment Variables
+
+| Variable           | Description                                  | Default   |
+|--------------------|----------------------------------------------|-----------|
+| JUPYTER_PASSWORD   | Password for Jupyter Lab                     | Jup1t3R!  |
+| DISABLE_AUTOLAUNCH | Disable Web UIs from launching automatically | (not set) |
+
+## Logs
+
+Fooocus creates a log file, and you can tail the log instead of
+killing the service to view the logs.
+
+| Application | Log file                      |
+|-------------|-------------------------------|
+| Fooocus     | /workspace/logs/fooocus.log   |
+
+For example:
+
+```bash
+tail -f /workspace/logs/fooocus.log
+```
 
 ## Community and Contributing
 

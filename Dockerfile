@@ -2,6 +2,8 @@
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
 
 ARG AUDIOCRAFT_VERSION=2.0.1
+ARG TORCH_VERSION=2.0.1
+ARG XFORMERS_VERSION=0.0.22
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -67,8 +69,8 @@ RUN git clone https://github.com/GrandaddyShmax/audiocraft_plus.git && \
 # Install the dependencies for Audiocraft Plus
 WORKDIR /audiocraft_plus
 RUN source /venv/bin/activate && \
-    pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && \
-    pip3 install --no-cache-dir xformers protobuf && \
+    pip3 install --no-cache-dir torch==${TORCH_VERSION} torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && \
+    pip3 install --no-cache-dir xformers==${XFORMERS_VERSION} protobuf && \
     pip3 install -r requirements.txt && \
     pip3 install -e . && \
     deactivate
@@ -80,10 +82,20 @@ RUN pip3 install -U --no-cache-dir jupyterlab \
         ipywidgets \
         gdown
 
+# Install rclone
+RUN curl https://rclone.org/install.sh | bash
+
 # Install runpodctl
 RUN wget https://github.com/runpod/runpodctl/releases/download/v1.10.0/runpodctl-linux-amd -O runpodctl && \
     chmod a+x runpodctl && \
     mv runpodctl /usr/local/bin
+
+# Install croc
+RUN curl https://getcroc.schollz.com | bash
+
+# Install speedtest CLI
+RUN curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash && \
+    apt install speedtest
 
 # Remove existing SSH host keys
 RUN rm -f /etc/ssh/ssh_host_*
