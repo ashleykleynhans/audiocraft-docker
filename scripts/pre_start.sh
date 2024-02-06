@@ -32,9 +32,6 @@ if [ "$(printf '%s\n' "$EXISTING_VERSION" "$TEMPLATE_VERSION" | sort -V | head -
     if [ "$EXISTING_VERSION" != "$TEMPLATE_VERSION" ]; then
         sync_apps
         fix_venvs
-
-        # Create logs directory
-        mkdir -p /workspace/logs
     else
         echo "Existing version is the same as the template version, no syncing required."
     fi
