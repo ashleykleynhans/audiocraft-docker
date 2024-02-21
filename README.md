@@ -17,7 +17,10 @@ conditioning.
   https://github.com/GrandaddyShmax/audiocraft_plus) 2.0.1
 * Torch 2.0.1
 * xformers 0.0.22
+* Jupyter Lab
 * [runpodctl](https://github.com/runpod/runpodctl)
+* [OhMyRunPod](https://github.com/kodxana/OhMyRunPod)
+* [RunPod File Uploader](https://github.com/kodxana/RunPod-FilleUploader)
 * [croc](https://github.com/schollz/croc)
 * [rclone](https://rclone.org/)
 
@@ -43,6 +46,7 @@ docker run -d \
   -v /workspace \
   -p 3000:3001 \
   -p 8888:8888 \
+  -p 2999:2999 \
   -e JUPYTER_PASSWORD=Jup1t3R! \
   ashleykza/audiocraft:latest
 ```
@@ -51,10 +55,11 @@ You can obviously substitute the image name and tag with your own.
 
 ### Ports
 
-| Connect Port | Internal Port | Description     |
-|--------------|---------------|-----------------|
-| 3000         | 3001          | Audiocraft Plus |
-| 8888         | 8888          | Jupyter Lab     |
+| Connect Port | Internal Port | Description          |
+|--------------|---------------|----------------------|
+| 3000         | 3001          | Audiocraft Plus      |
+| 8888         | 8888          | Jupyter Lab          |
+| 2999         | 2999          | RunPod File Uploader |
 
 ### Environment Variables
 
@@ -65,17 +70,17 @@ You can obviously substitute the image name and tag with your own.
 
 ## Logs
 
-Fooocus creates a log file, and you can tail the log instead of
+Audiocraft Plus creates a log file, and you can tail the log instead of
 killing the service to view the logs.
 
-| Application | Log file                      |
-|-------------|-------------------------------|
-| Fooocus     | /workspace/logs/fooocus.log   |
+| Application     | Log file                       |
+|-----------------|--------------------------------|
+| Audiocraft Plus | /workspace/logs/audiocraft.log |
 
 For example:
 
 ```bash
-tail -f /workspace/logs/fooocus.log
+tail -f /workspace/logs/audiocraft.log
 ```
 
 ## Community and Contributing
