@@ -13,7 +13,8 @@ fi
 sync_apps() {
     # Sync venv to workspace to support Network volumes
     echo "Syncing venv to workspace, please wait..."
-    rsync --remove-source-files -rlptDu /venv/ /workspace/venv/
+    mkdir -p ${VENV_PATH}
+    rsync --remove-source-files -rlptDu /venv/ ${VENV_PATH}/
 
     # Sync Audiocraft Plus to workspace to support Network volumes
     echo "Syncing Audiocraft Plus to workspace, please wait..."
@@ -25,7 +26,7 @@ sync_apps() {
 fix_venvs() {
     # Fix the venv to make it work from /workspace
     echo "Fixing venv..."
-    /fix_venv.sh /venv /workspace/venv
+    /fix_venv.sh /venv ${VENV_PATH}
 }
 
 if [ "$(printf '%s\n' "$EXISTING_VERSION" "$TEMPLATE_VERSION" | sort -V | head -n 1)" = "$EXISTING_VERSION" ]; then
@@ -35,6 +36,8 @@ if [ "$(printf '%s\n' "$EXISTING_VERSION" "$TEMPLATE_VERSION" | sort -V | head -
     else
         echo "Existing version is the same as the template version, no syncing required."
     fi
+else
+    echo "Existing version is newer than the template version, not syncing!"
 fi
 
 if [[ ${DISABLE_AUTOLAUNCH} ]]
@@ -43,12 +46,12 @@ then
     echo "You can launch it manually:"
     echo ""
     echo "   cd /workspace/audiocraft_plus"
-    echo "   deactivate && source /workspace/venv/bin/activate"
+    echo "   deactivate && source ${VENV_PATH}/bin/activate"
     echo "   ./python3 app.py --listen 0.0.0.0 --server_port 3001"
 else
     echo "Starting Audiocraft Plus"
     export HF_HOME="/workspace"
-    source /workspace/venv/bin/activate
+    source ${VENV_PATH}/bin/activate
     cd /workspace/audiocraft_plus && nohup python3 app.py --listen 0.0.0.0 --server_port 3001 > /workspace/logs/audiocraft.log 2>&1 &
     echo "Audiocraft Plus started"
     echo "Log file: /workspace/logs/audiocraft.log"
