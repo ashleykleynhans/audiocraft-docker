@@ -3,9 +3,12 @@
 export PYTHONUNBUFFERED=1
 
 echo "Template version: ${TEMPLATE_VERSION}"
+echo "venv: ${VENV_PATH}"
 
-if [[ -e "/workspace/audiocraft_plus/template_version" ]]; then
-    EXISTING_VERSION=$(cat /workspace/audiocraft_plus/template_version)
+DOCKER_IMAGE_VERSION_FILE="/workspace/audiocraft_plus/docker_image_version"
+
+if [[ -e ${DOCKER_IMAGE_VERSION_FILE} ]]; then
+    EXISTING_VERSION=$(cat ${DOCKER_IMAGE_VERSION_FILE})
 else
     EXISTING_VERSION="0.0.0"
 fi
@@ -20,7 +23,7 @@ sync_apps() {
     echo "Syncing Audiocraft Plus to workspace, please wait..."
     rsync --remove-source-files -rlptDu /audiocraft_plus/ /workspace/audiocraft_plus/
 
-    echo "${TEMPLATE_VERSION}" > /workspace/audiocraft_plus/template_version
+    echo "${TEMPLATE_VERSION}" > ${DOCKER_IMAGE_VERSION_FILE}
 }
 
 fix_venvs() {
