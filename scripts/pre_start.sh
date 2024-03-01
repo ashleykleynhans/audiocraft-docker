@@ -4,8 +4,8 @@ export PYTHONUNBUFFERED=1
 
 echo "Template version: ${TEMPLATE_VERSION}"
 
-if [[ -e "/workspace/template_version" ]]; then
-    EXISTING_VERSION=$(cat /workspace/template_version)
+if [[ -e "/workspace/audiocraft_plus/template_version" ]]; then
+    EXISTING_VERSION=$(cat /workspace/audiocraft_plus/template_version)
 else
     EXISTING_VERSION="0.0.0"
 fi
@@ -20,7 +20,7 @@ sync_apps() {
     echo "Syncing Audiocraft Plus to workspace, please wait..."
     rsync --remove-source-files -rlptDu /audiocraft_plus/ /workspace/audiocraft_plus/
 
-    echo "${TEMPLATE_VERSION}" > /workspace/template_version
+    echo "${TEMPLATE_VERSION}" > /workspace/audiocraft_plus/template_version
 }
 
 fix_venvs() {
