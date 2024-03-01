@@ -2,7 +2,6 @@
 
 ## About
 
-About
 Audiocraft is a library for audio processing and generation with deep learning.
 It features the state-of-the-art EnCodec audio compressor / tokenizer, along with
 MusicGen, a simple and controllable music generation LM with textual and melodic
@@ -47,6 +46,7 @@ docker run -d \
   -p 3000:3001 \
   -p 8888:8888 \
   -p 2999:2999 \
+  -e VENV_PATH="/workspace/venvs/audiocraft_plus" \
   ashleykza/audiocraft:latest
 ```
 
@@ -62,9 +62,10 @@ You can obviously substitute the image name and tag with your own.
 
 ### Environment Variables
 
-| Variable           | Description                                  | Default   |
-|--------------------|----------------------------------------------|-----------|
-| DISABLE_AUTOLAUNCH | Disable Web UIs from launching automatically | (not set) |
+| Variable           | Description                                  | Default                          |
+|--------------------|----------------------------------------------|----------------------------------|
+| DISABLE_AUTOLAUNCH | Disable Web UIs from launching automatically | (not set)                        |
+| VENV_PATH          | Set the path for the Python venv for the app | /workspace/venvs/audiocraft_plus |
 
 ## Logs
 
