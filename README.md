@@ -14,8 +14,8 @@ conditioning.
 * Python 3.10.12
 * [Audiocraft Plus](
   https://github.com/GrandaddyShmax/audiocraft_plus) 2.0.1
-* Torch 2.0.1
-* xformers 0.0.22
+* Torch 2.2.0
+* xformers 0.0.24
 * Jupyter Lab
 * [runpodctl](https://github.com/runpod/runpodctl)
 * [OhMyRunPod](https://github.com/kodxana/OhMyRunPod)
