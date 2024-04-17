@@ -35,7 +35,6 @@ RUN rm -f /etc/ssh/ssh_host_*
 
 # NGINX Proxy
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY nginx/502.html /usr/share/nginx/html/502.html
 
 # Set template version
 ARG RELEASE
