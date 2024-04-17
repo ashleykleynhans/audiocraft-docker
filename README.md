@@ -21,8 +21,8 @@ conditioning.
 * Python 3.10.12
 * [Audiocraft Plus](
   https://github.com/GrandaddyShmax/audiocraft_plus) 2.0.1
-* Torch 2.2.0
-* xformers 0.0.24
+* Torch 2.2.2
+* xformers 0.0.25.post1
 * Jupyter Lab
 * [runpodctl](https://github.com/runpod/runpodctl)
 * [OhMyRunPod](https://github.com/kodxana/OhMyRunPod)
@@ -40,7 +40,7 @@ to launch it on RunPod.
 ## Building the Docker image
 
 > [!NOTE]
-> You will need to edit the `docker-bake.hcl` file and update `USERNAME`,
+> You will need to edit the `docker-bake.hcl` file and update `REGISTRY_USER`,
 > and `RELEASE`.  You can obviously edit the other values too, but these
 > are the most important ones.
 
@@ -54,6 +54,10 @@ docker login
 # Build the image, tag the image, and push the image to Docker Hub
 cd audiocraft-docker
 docker buildx bake -f docker-bake.hcl --push
+
+# Same as above but customize registry/user/release:
+REGISTRY=ghcr.io REGISTRY_USER=myuser RELEASE=my-release docker buildx \
+    bake -f docker-bake.hcl --push
 ```
 
 ## Running Locally
