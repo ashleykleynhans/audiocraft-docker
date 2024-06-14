@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 export PYTHONUNBUFFERED=1
+export APP="audiocraft_plus"
+DOCKER_IMAGE_VERSION_FILE="/workspace/${APP}/docker_image_version"
 
 echo "Template version: ${TEMPLATE_VERSION}"
 echo "venv: ${VENV_PATH}"
-
-DOCKER_IMAGE_VERSION_FILE="/workspace/audiocraft_plus/docker_image_version"
 
 if [[ -e ${DOCKER_IMAGE_VERSION_FILE} ]]; then
     EXISTING_VERSION=$(cat ${DOCKER_IMAGE_VERSION_FILE})
