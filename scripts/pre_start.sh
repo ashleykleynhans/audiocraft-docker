@@ -14,16 +14,20 @@ else
 fi
 
 sync_apps() {
-    # Sync venv to workspace to support Network volumes
-    echo "Syncing venv to workspace, please wait..."
-    mkdir -p ${VENV_PATH}
-    rsync --remove-source-files -rlptDu /venv/ ${VENV_PATH}/
+    # Only sync if the DISABLE_SYNC environment variable is not set
+    if [ -z "${DISABLE_SYNC}" ]; then
+        # Sync venv to workspace to support Network volumes
+        echo "Syncing venv to workspace, please wait..."
+        mkdir -p ${VENV_PATH}
+        mv /venv/* ${VENV_PATH}/
+        rm -rf /venv
 
-    # Sync Audiocraft Plus to workspace to support Network volumes
-    echo "Syncing Audiocraft Plus to workspace, please wait..."
-    rsync --remove-source-files -rlptDu /audiocraft_plus/ /workspace/audiocraft_plus/
+        # Sync Audiocraft Plus to workspace to support Network volumes
+        echo "Syncing Audiocraft Plus to workspace, please wait..."
+        mv /${APP} /workspace/${APP}
 
-    echo "${TEMPLATE_VERSION}" > ${DOCKER_IMAGE_VERSION_FILE}
+        echo "${TEMPLATE_VERSION}" > ${DOCKER_IMAGE_VERSION_FILE}
+    fi
 }
 
 fix_venvs() {

@@ -17,12 +17,12 @@ conditioning.
 ## Installs
 
 * Ubuntu 22.04 LTS
-* CUDA 11.8
+* CUDA 12.1
 * Python 3.10.12
 * [Audiocraft Plus](
   https://github.com/GrandaddyShmax/audiocraft_plus) 2.0.1
-* Torch 2.2.2
-* xformers 0.0.25.post1
+* Torch 2.3.0
+* xformers 0.0.26.post1
 * Jupyter Lab
 * [runpodctl](https://github.com/runpod/runpodctl)
 * [OhMyRunPod](https://github.com/kodxana/OhMyRunPod)
@@ -92,11 +92,12 @@ You can obviously substitute the image name and tag with your own.
 
 ### Environment Variables
 
-| Variable             | Description                                  | Default                          |
-|----------------------|----------------------------------------------|----------------------------------|
-| VENV_PATH            | Set the path for the Python venv for the app | /workspace/venvs/audiocraft_plus |
-| JUPYTER_LAB_PASSWORD | Set a password for Jupyter lab               | not set - no password            |
-| DISABLE_AUTOLAUNCH   | Disable Web UIs from launching automatically | (not set)                        |
+| Variable             | Description                                      | Default                          |
+|----------------------|--------------------------------------------------|----------------------------------|
+| VENV_PATH            | Set the path for the Python venv for the app     | /workspace/venvs/audiocraft_plus |
+| JUPYTER_LAB_PASSWORD | Set a password for Jupyter lab                   | not set - no password            |
+| DISABLE_AUTOLAUNCH   | Disable Web UIs from launching automatically     | (not set)                        |
+| DISABLE_SYNC         | Disable syncing if using a RunPod network volume | (not set)                        |
 
 ## Logs
 
