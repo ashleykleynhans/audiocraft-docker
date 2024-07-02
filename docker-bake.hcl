@@ -11,7 +11,7 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "3.2.1"
+    default = "3.3.0"
 }
 
 variable "CU_VERSION" {
@@ -23,7 +23,7 @@ variable "BASE_IMAGE_REPOSITORY" {
 }
 
 variable "BASE_IMAGE_VERSION" {
-    default = "1.5.0"
+    default = "1.7.0"
 }
 
 variable "CUDA_VERSION" {
@@ -44,6 +44,5 @@ target "default" {
         TORCH_VERSION = "${TORCH_VERSION}+cu${CU_VERSION}"
         XFORMERS_VERSION = "0.0.26.post1"
         AUDIOCRAFT_VERSION = "2.0.1"
-        VENV_PATH = "/workspace/venvs/audiocraft_plus"
     }
 }
